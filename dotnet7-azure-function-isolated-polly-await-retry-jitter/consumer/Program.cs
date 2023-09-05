@@ -23,13 +23,13 @@ var host = new HostBuilder()
         var retryPolicy = Policy
             .HandleResult<HttpResponseMessage>(response => !response.IsSuccessStatusCode)
             .WaitAndRetryAsync(delay,
-                onRetry: (message, retryCount) =>
+                onRetry: (message, timeSpan) =>
                 {
                     Console.Out.WriteLine("----------------------------------------------------");
                     Console.Out.WriteLine($"### RequestMessage: {message.Result.RequestMessage}");
                     Console.Out.WriteLine($"### StatusCode: {message.Result.StatusCode}");
                     Console.Out.WriteLine($"### ReasonPhrase: {message.Result.ReasonPhrase}");
-                    Console.Out.WriteLine($"### Retry: {retryCount}");
+                    Console.Out.WriteLine($"### TimeSpan: {timeSpan}");
                     Console.Out.WriteLine("----------------------------------------------------");
                 });
 
